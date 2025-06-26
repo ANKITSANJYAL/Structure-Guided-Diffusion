@@ -1,7 +1,11 @@
-# Core dependencies
-torch>=2.0.0
-torchvision>=0.15.0
-torchaudio>=2.0.0
+# Kaggle-specific requirements with compatible CUDA versions
+# Install these first to avoid CUDA version conflicts
+
+# Core dependencies with specific CUDA versions
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==2.6.0+cu118
+torchvision==0.21.0+cu118
+torchaudio==2.6.0+cu118
 
 # Diffusion and transformers
 diffusers>=0.21.0
@@ -35,20 +39,5 @@ scikit-learn>=1.3.0
 seaborn>=0.12.0
 tensorboard>=2.13.0
 
-# Configuration and utilities
-PyYAML>=6.0
-tqdm>=4.65.0
-wandb>=0.15.0
-
 # Evaluation metrics
-pytorch-fid>=0.3.0
-
-# Jupyter and development
-jupyter>=1.0.0
-ipykernel>=6.25.0
-black>=23.0.0
-flake8>=6.0.0
-
-# Testing
-pytest>=7.4.0
-pytest-cov>=4.1.0 
+pytorch-fid>=0.3.0 

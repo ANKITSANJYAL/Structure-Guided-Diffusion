@@ -68,7 +68,26 @@ Despite the impressive progress in diffusion-based generative models (e.g., Stab
 
 1. **Python Environment**: Python 3.8+ with pip
 2. **Dependencies**: Install required packages:
+
+   **For Local Development:**
    ```bash
+   pip install -r requirements.txt
+   ```
+
+   **For Kaggle (to avoid CUDA version conflicts):**
+   ```bash
+   pip install -r requirements_kaggle.txt
+   ```
+
+   **Alternative Kaggle Installation (if issues persist):**
+   ```bash
+   # First, uninstall existing torch packages
+   pip uninstall torch torchvision torchaudio -y
+   
+   # Install compatible versions
+   pip install torch==2.6.0+cu118 torchvision==0.21.0+cu118 torchaudio==2.6.0+cu118 --index-url https://download.pytorch.org/whl/cu118
+   
+   # Install other dependencies
    pip install -r requirements.txt
    ```
 
@@ -117,9 +136,29 @@ This will:
 
 1. **Push to GitHub**: Commit and push all changes to your repository
 2. **Clone in Kaggle**: Clone your repo in a Kaggle notebook
-3. **Install Dependencies**: Run `pip install -r requirements.txt`
+3. **Setup Environment**: Run the Kaggle setup script:
+   ```bash
+   python scripts/setup_kaggle.py
+   ```
+   This script will:
+   - Uninstall conflicting PyTorch versions
+   - Install compatible CUDA versions
+   - Install all other dependencies
+   - Test that everything works correctly
 4. **Start Training**: Run the training script directly
 5. **Download Results**: Download checkpoints and results to your local machine
+
+**Alternative Manual Setup (if script fails):**
+```bash
+# Uninstall existing packages
+pip uninstall torch torchvision torchaudio -y
+
+# Install compatible versions
+pip install torch==2.6.0+cu118 torchvision==0.21.0+cu118 torchaudio==2.6.0+cu118 --index-url https://download.pytorch.org/whl/cu118
+
+# Install other dependencies
+pip install -r requirements.txt
+```
 
 The training script automatically:
 - Downloads pre-trained models (DINOv2, CLIP) on first run
