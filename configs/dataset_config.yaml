@@ -1,0 +1,152 @@
+# Dataset Configuration for GeoDreamer
+
+# Oxford Flowers 102 Dataset
+oxford_flowers_102:
+  name: "Oxford Flowers 102"
+  root_dir: "data/raw/oxford_flowers_102"
+  download_url: "https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz"
+  annotations_url: "https://www.robots.ox.ac.uk/~vgg/data/flowers/102/imagelabels.mat"
+  splits_url: "https://www.robots.ox.ac.uk/~vgg/data/flowers/102/setid.mat"
+  
+  # Dataset statistics
+  num_classes: 102
+  num_images: 8189
+  image_size: [224, 224]
+  
+  # Class names (partial list for reference)
+  class_names:
+    - "pink primrose"
+    - "hard-leaved pocket orchid"
+    - "canterbury bells"
+    - "sweet pea"
+    - "english marigold"
+    - "tiger lily"
+    - "moon orchid"
+    - "bird of paradise"
+    - "monkshood"
+    - "globe thistle"
+    # ... (full list available in dataset)
+    
+  # Data augmentation
+  transforms:
+    train:
+      - type: "random_resized_crop"
+        size: 224
+        scale: [0.8, 1.0]
+        ratio: [0.75, 1.33]
+      - type: "random_horizontal_flip"
+        p: 0.5
+      - type: "color_jitter"
+        brightness: 0.2
+        contrast: 0.2
+        saturation: 0.2
+        hue: 0.1
+      - type: "normalize"
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+        
+    val:
+      - type: "resize"
+        size: 256
+      - type: "center_crop"
+        size: 224
+      - type: "normalize"
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+        
+    test:
+      - type: "resize"
+        size: 256
+      - type: "center_crop"
+        size: 224
+      - type: "normalize"
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+# Stanford Cars Dataset (Optional)
+stanford_cars:
+  name: "Stanford Cars"
+  root_dir: "data/raw/stanford_cars"
+  download_url: "http://ai.stanford.edu/~jkrause/car196/cars_train.tgz"
+  annotations_url: "http://ai.stanford.edu/~jkrause/car196/cars_annos.mat"
+  
+  num_classes: 196
+  num_images: 16185
+  image_size: [224, 224]
+  
+  # Similar transforms as Oxford Flowers
+  transforms:
+    train:
+      - type: "random_resized_crop"
+        size: 224
+        scale: [0.8, 1.0]
+        ratio: [0.75, 1.33]
+      - type: "random_horizontal_flip"
+        p: 0.5
+      - type: "color_jitter"
+        brightness: 0.2
+        contrast: 0.2
+        saturation: 0.2
+        hue: 0.1
+      - type: "normalize"
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+        
+    val:
+      - type: "resize"
+        size: 256
+      - type: "center_crop"
+        size: 224
+      - type: "normalize"
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+# CUB-200 Dataset (Optional)
+cub_200:
+  name: "CUB-200-2011"
+  root_dir: "data/raw/cub_200"
+  download_url: "http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz"
+  
+  num_classes: 200
+  num_images: 11788
+  image_size: [224, 224]
+  
+  # Similar transforms as Oxford Flowers
+  transforms:
+    train:
+      - type: "random_resized_crop"
+        size: 224
+        scale: [0.8, 1.0]
+        ratio: [0.75, 1.33]
+      - type: "random_horizontal_flip"
+        p: 0.5
+      - type: "color_jitter"
+        brightness: 0.2
+        contrast: 0.2
+        saturation: 0.2
+        hue: 0.1
+      - type: "normalize"
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+        
+    val:
+      - type: "resize"
+        size: 256
+      - type: "center_crop"
+        size: 224
+      - type: "normalize"
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+# Data loading configuration
+data_loading:
+  shuffle: true
+  drop_last: true
+  pin_memory: true
+  persistent_workers: true
+  
+# Cache configuration
+cache:
+  enable_cache: true
+  cache_dir: "data/processed/cache"
+  max_cache_size: "10GB" 
