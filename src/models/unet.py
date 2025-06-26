@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class CrossAttentionWithGeometry(AttentionProcessor):
+class CrossAttentionWithGeometry(AttnProcessor):
     """
     Custom attention processor to attend over both CLIP and DINO features.
     """
