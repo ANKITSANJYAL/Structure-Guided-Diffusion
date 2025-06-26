@@ -31,6 +31,39 @@ from training.metrics import compute_metrics
 from utils.logging_utils import setup_logging, setup_wandb
 
 
+def download_pretrained_models():
+    """Download required pre-trained models (DINOv2 and CLIP)."""
+    print("Downloading pre-trained models...")
+    
+    try:
+        # Import here to avoid issues if not installed
+        from models.geometry_encoder import GeometryEncoder
+        from data.semantic_conditioning import SemanticConditioner
+        
+        # Download DINOv2
+        print("Downloading DINOv2 model...")
+        geometry_encoder = GeometryEncoder(model_name="dinov2_vitb14", freeze_backbone=True)
+        test_image = torch.randn(1, 3, 224, 224)
+        with torch.no_grad():
+            features = geometry_encoder(test_image)
+        print("✅ DINOv2 model downloaded successfully!")
+        
+        # Download CLIP
+        print("Downloading CLIP model...")
+        semantic_conditioner = SemanticConditioner(model_name="openai/clip-vit-base-patch32", freeze_backbone=True)
+        test_text = ["daisy", "rose"]
+        with torch.no_grad():
+            embeddings = semantic_conditioner(test_text)
+        print("✅ CLIP model downloaded successfully!")
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Failed to download pre-trained models: {e}")
+        print("Please run: python scripts/download_models.py")
+        return False
+
+
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description='Train GeoDreamer model')
@@ -74,6 +107,12 @@ def parse_args():
         '--no_wandb',
         action='store_true',
         help='Disable WandB logging'
+    )
+    
+    parser.add_argument(
+        '--skip_model_download',
+        action='store_true',
+        help='Skip downloading pre-trained models'
     )
     
     return parser.parse_args()
@@ -239,6 +278,12 @@ def main():
     
     # Setup device
     device = setup_device(config)
+    
+    # Download pre-trained models if not skipped
+    if not args.skip_model_download:
+        if not download_pretrained_models():
+            print("Failed to download pre-trained models. Exiting.")
+            return
     
     # Setup logging
     logger = setup_logging(args.output_dir)
