@@ -1,5 +1,5 @@
 from diffusers import UNet2DConditionModel
-from diffusers.models.attention_processor import AttentionProcessor
+from diffusers.models.attention_processor import AttnProcessor
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
