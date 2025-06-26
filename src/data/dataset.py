@@ -38,12 +38,12 @@ class OxfordFlowersDataset(Dataset):
         self.split = split
         self.transform = transform
         
-        # Load dataset metadata
-        self._load_metadata()
-        
-        # Download if requested
+        # Download if requested (must happen before loading metadata)
         if download:
             self._download_dataset()
+        
+        # Load dataset metadata
+        self._load_metadata()
     
     def _load_metadata(self):
         """Load dataset metadata and splits."""
@@ -79,10 +79,11 @@ class OxfordFlowersDataset(Dataset):
         
         # Get image paths
         self.image_paths = []
+        images_dir = os.path.join(self.root_dir, "jpg")  # Images are extracted to jpg subdirectory
         for idx in self.indices:
             # Oxford Flowers images are named as image_00001.jpg, image_00002.jpg, etc.
             image_name = f"image_{idx+1:05d}.jpg"
-            image_path = os.path.join(self.root_dir, image_name)
+            image_path = os.path.join(images_dir, image_name)
             if os.path.exists(image_path):
                 self.image_paths.append(image_path)
             else:

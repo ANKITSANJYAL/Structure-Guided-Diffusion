@@ -161,12 +161,17 @@ def create_dataloaders(config: dict):
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     
-    # Create datasets
+    # Create datasets with automatic download for Oxford Flowers
+    download_kwargs = {}
+    if config['data']['dataset_name'] == 'oxford_flowers_102':
+        download_kwargs['download'] = True
+    
     train_dataset = create_dataset(
         dataset_name=config['data']['dataset_name'],
         root_dir=config['data']['root_dir'],
         split='train',
         transform=train_transform,
+        **download_kwargs
     )
     
     val_dataset = create_dataset(
@@ -174,6 +179,7 @@ def create_dataloaders(config: dict):
         root_dir=config['data']['root_dir'],
         split='val',
         transform=val_transform,
+        **download_kwargs
     )
     
     # Create dataloaders

@@ -64,7 +64,67 @@ Despite the impressive progress in diffusion-based generative models (e.g., Stab
 
 ## Getting Started
 
-*[This section will be populated as the project develops]*
+### Prerequisites
+
+1. **Python Environment**: Python 3.8+ with pip
+2. **Dependencies**: Install required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Data Loading
+
+The project automatically handles dataset downloading and processing:
+
+- **Oxford Flowers 102**: Automatically downloaded from the official source when you first run training
+- **Dataset Location**: `data/raw/oxford_flowers_102/`
+- **Processed Data**: `data/processed/` (automatically created)
+
+### Testing Dataset Loading
+
+Before training, you can test the dataset loading:
+
+```bash
+python scripts/test_dataset.py
+```
+
+This will:
+1. Download the Oxford Flowers 102 dataset (~330MB)
+2. Extract and process the images
+3. Test loading training and validation splits
+4. Verify sample loading works correctly
+
+### Training
+
+1. **Start Training**:
+   ```bash
+   python scripts/train.py --config configs/training_config.yaml
+   ```
+
+2. **Resume Training** (if interrupted):
+   ```bash
+   python scripts/train.py --config configs/training_config.yaml --resume_from path/to/checkpoint.pth
+   ```
+
+### Generation
+
+1. **Generate Images**:
+   ```bash
+   python scripts/generate.py --config configs/training_config.yaml --checkpoint path/to/model.pth --prompt "a beautiful sunflower"
+   ```
+
+### Kaggle Training Workflow
+
+1. **Push to GitHub**: Commit and push all changes to your repository
+2. **Clone in Kaggle**: Clone your repo in a Kaggle notebook
+3. **Install Dependencies**: Run `pip install -r requirements.txt`
+4. **Start Training**: Run the training script directly
+5. **Download Results**: Download checkpoints and results to your local machine
+
+The training script automatically:
+- Downloads pre-trained models (DINOv2, CLIP) on first run
+- Downloads and processes the Oxford Flowers dataset
+- Handles all data loading and preprocessing
 
 ## Contributing
 

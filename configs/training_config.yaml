@@ -3,6 +3,7 @@
 # Data Configuration
 data:
   dataset_name: "oxford_flowers_102"
+  root_dir: "data/raw/oxford_flowers_102"
   image_size: 224
   batch_size: 16
   num_workers: 4
