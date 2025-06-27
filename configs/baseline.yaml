@@ -1,0 +1,73 @@
+# Phase 1: Baseline CLIP-conditioned Diffusion Model
+experiment:
+  name: "baseline_clip_conditioned"
+  phase: 1
+  description: "Standard DDPM with CLIP text conditioning"
+
+# Model Configuration
+model:
+  type: "clip_conditioned_unet"
+  unet:
+    in_channels: 3
+    out_channels: 3
+    model_channels: 128
+    num_res_blocks: 2
+    attention_resolutions: [8, 16]
+    dropout: 0.1
+    channel_mult: [1, 2, 4, 8]
+    num_heads: 8
+    use_scale_shift_norm: true
+    resblock_updown: true
+    transformer_depth: 1
+    context_dim: 768  # CLIP embedding dimension
+  
+  clip_encoder:
+    model_name: "openai/clip-vit-base-patch16"
+    projection_dim: 768
+    freeze: true
+
+# Diffusion Configuration
+diffusion:
+  scheduler: "ddpm"
+  num_train_timesteps: 1000
+  beta_start: 0.0001
+  beta_end: 0.02
+  beta_schedule: "linear"
+
+# Training Configuration
+training:
+  batch_size: 8
+  num_epochs: 100
+  learning_rate: 1e-4
+  weight_decay: 0.01
+  gradient_clip_val: 1.0
+  
+  # Classifier-Free Guidance
+  cfg_scale: 7.5
+  cfg_probability: 0.1  # Probability of using null conditioning
+  
+  # Logging
+  log_every_n_steps: 100
+  save_every_n_epochs: 10
+  eval_every_n_epochs: 5
+
+# Data Configuration
+data:
+  dataset: "oxford_flowers_102"
+  image_size: 256
+  num_workers: 4
+  train_split: 0.8
+  val_split: 0.2
+
+# Evaluation Configuration
+evaluation:
+  metrics: ["fid", "clipsim", "lpips", "ssim"]
+  num_samples: 1000
+  batch_size: 16
+
+# Paths
+paths:
+  data_dir: "data/flowers"
+  checkpoint_dir: "checkpoints/baseline"
+  log_dir: "logs/baseline"
+  output_dir: "outputs/baseline" 
