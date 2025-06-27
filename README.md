@@ -1,4 +1,4 @@
-# GeoDreamer: Geometry-Guided Diffusion via Implicit Spatial Learning
+# Structure-Guided-Diffusion: Geometry-Guided Diffusion via Implicit Spatial Learning
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -6,7 +6,7 @@
 
 ## 📋 Overview
 
-GeoDreamer is a novel geometry-aware text-to-image diffusion model that learns spatial structure, semantic coherence, and view-consistent features using DINO-based geometric priors and CLIP-driven textual conditioning. The model generates high-quality images from text alone, having implicitly learned spatial priors from geometry supervision during training.
+Structure-Guided-Diffusion is a novel geometry-aware text-to-image diffusion model that learns spatial structure, semantic coherence, and view-consistent features using DINO-based geometric priors and CLIP-driven textual conditioning. The model generates high-quality images from text alone, having implicitly learned spatial priors from geometry supervision during training.
 
 ## 🎯 Objective
 
@@ -85,7 +85,7 @@ pip install -r requirements.txt
 ## 📁 Project Structure
 
 ```
-geodreamer/
+Structure-Guided-Diffusion/
 ├── data/
 │   └── flowers/                 # Oxford Flowers 102 dataset
 ├── models/
@@ -197,8 +197,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you use this code in your research, please cite:
 
 ```bibtex
-@misc{geodreamer2024,
-  title={GeoDreamer: Geometry-Guided Diffusion via Implicit Spatial Learning},
+@misc{structureguideddiffusion2024,
+  title={Structure-Guided-Diffusion: Geometry-Guided Diffusion via Implicit Spatial Learning},
   author={Ankit Sanjyal},
   year={2024},
   url={https://github.com/ANKITSANJYAL/Structure-Guided-Diffusion}
